@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="add-list">
+        <h2>TODO APP| BY REZA TADI</h2>
+        <div class="top-items">
+            <input type="text" placeholder="Add to do..." id="test-text">
+            <input type="date" placeholder="mm/dd/yyyy" id="date-time">
+            <button type="button" id="add-button">add</button>
+        </div>
+        <div class="down-items">
+            <button type="button" id="all-button">All</button>
+            <button type="button" id="pending-button">Pending</button>
+            <button type="button" id="complete-button">Complete</button>
+        </div>
+        <div class="delete-all">
+            <button type="button" id="delete-button">Delete All</button>
+        </div>
+    </div>
+    <div class="table">
+        <table>
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Wash the dishes</td>
+                <td>Date</td>
+                <td>pending</td>
+                <td>
+                    <button>Edit</button>
+                    <button>Do</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Wash the dishes</td>
+                <td>Date</td>
+                <td>pending</td>
+                <td>
+                    <button>Edit</button>
+                    <button>Do</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
