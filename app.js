@@ -1,9 +1,11 @@
 const textInput = document.getElementById("test-text");
 const dateInput = document.getElementById("date-time");
 const addButton = document.getElementById("add-button");
+const editButton = document.getElementById("edit-button");
 const alertMessage = document.getElementById("alert-message");
 const toDoBody = document.querySelector("tbody");
 let deleteButton = document.getElementById("delete-button");
+const filterButtons= document.querySelectorAll(".filter-button");
 
 let todoList = JSON.parse(localStorage.getItem("todolist")) || [];
 
@@ -30,22 +32,23 @@ const saveToLocalStorage = () => {
     localStorage.setItem("todolist", JSON.stringify(todoList));
 }
 
-const displayToDoList = () => {
-    toDoBody.innerHTML=""
-    if (!todoList.length) {
+const displayToDoList = (data) => {
+    const todos = data ? data : todoList;
+    toDoBody.innerHTML=" "
+    if (!todos.length) {
         toDoBody.innerHTML = "<tr><td colspan='4'>Any task not found!</td></tr>";
         return;
     }
-    todoList.forEach ((todo) => {
+    todos.forEach ((todo) => {
          toDoBody.innerHTML += `
        <tr>
        <td>${todo.text}</td>
        <td>${todo.date ? todo.date : "No date"}</td>
        <td>${todo.completed ? "Completed" : "Pending"}</td>
        <td>
-          <button>Edit</button>
-          <button>Do</button>
-          <button onclick="deleteHandler'${todo.id}'">Delete</button>
+          <button onclick='editHandler("${todo.id}")'>Edit</button>
+          <button onclick='changeStatus("${todo.id}")'>${todo.completed? "Undo" : "Do"}</button>
+          <button onclick='deleteHandler("${todo.id}")'>Delete</button>
        </td>
        </tr>
       `
@@ -89,6 +92,82 @@ const deleteButtonHandler = () => {
    
 }
 
+const deleteHandler = (id) => {
+    const newToDo = todoList.filter ((todo) => todo.id !== id)
+    todoList = newToDo;
+    saveToLocalStorage();
+    displayToDoList();
+    showAlert("A task deleted successfully" , "success")
+    
+}
+
+const changeStatus = (id) => {
+    const todo = todoList.find((todo) => todo.id === id ) 
+    todo.completed = !todo.completed;
+    saveToLocalStorage();
+    displayToDoList();
+    showAlert("Status changed successfully!", "success")       
+    }
+
+const editHandler = (id) => {
+    const todo = todoList.find ((todo) => todo.id === id);
+    textInput.value = todo.text;
+    dateInput.value = todo.date;
+    addButton.style.display = "none";
+    editButton.style.display = "inline-block";
+    editButton.dataset.id = id;
+    showAlert("You are editing a task", "editing")
+}
+
+const applyEditHandler = (event) => {
+    const id = event.target.dataset.id;
+    const todo = todoList.find ((todo) => todo.id === id );
+    todo.text = textInput.value;
+    todo.date = dateInput.value;
+    textInput.value = "";
+    dateInput.value = "";
+    addButton.style.display = "inline-block";
+    editButton.style.display = "none";
+    saveToLocalStorage();
+    displayToDoList();
+    showAlert("A task edited successfully", "success")
+}
+
+// const allButtonHandler = (todo) => {
+//     const allStatus = todoList.filter ((todo) => todo.text !== "");
+//     saveToLocalStorage()
+//     displayToDoList()
+//     showAlert("You show all tasks", "success")
+
+// }
+
+const filterHandler = (event) => {
+
+    let filteredTodos = null;
+    const filter = event.target.dataset.filter;
+    switch (filter) {
+        case "pending":
+            filteredTodos = todoList.filter ((todo) => todo.completed === false );
+            break;
+
+        case "completed" :
+            filteredTodos = todoList.filter ((todo) => todo.completed === true);  
+            break;
+    
+        default:
+            filteredTodos = todoList;
+            break;      
+    }
+ displayToDoList(filteredTodos)    
+}
+
+
 // window.addEventListener("load", displayToDoList)
+editButton.addEventListener("click", applyEditHandler)
 deleteButton.addEventListener("click", deleteButtonHandler)
 addButton.addEventListener("click", addHandler);
+// allButton.addEventListener("click", allButtonHandler);
+filterButtons.forEach((button) => {
+    button.addEventListener("click", filterHandler)
+});
+
