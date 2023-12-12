@@ -12,18 +12,24 @@
         <div class="top-items">
             <input type="text" placeholder="Add to do..." id="test-text">
             <input type="date" placeholder="mm/dd/yyyy" id="date-time">
-            <button type="button" id="add-button">add</button>
+            <button type="button" id="add-button">Add</button>
+            <button type="button" id="edit-button">Edit</button>
+        </div>
+        <div class="todo-buttons">
+        <div class="down-items">
+            <button type="button" class="filter-button" data-filter="all" id="all-button">All</button>
+            <button type="button" class="filter-button" data-filter="pending" id="pending-button">Pending</button>
+            <button type="button" class="filter-button" data-filter="completed" id="complete-button">Complete</button>
         </div>
         <div class="down-items">
-            <button type="button" id="all-button">All</button>
-            <button type="button" id="pending-button">Pending</button>
-            <button type="button" id="complete-button">Complete</button>
-        </div>
-        <div class="delete-all">
             <button type="button" id="delete-button">Delete All</button>
         </div>
     </div>
-    <div class="table">
+    </div>
+
+    <div id="alert-message"></div>
+    
+    <!-- <div class="table"> -->
         <table>
             <thead>
             <tr>
@@ -33,30 +39,10 @@
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>Wash the dishes</td>
-                <td>Date</td>
-                <td>pending</td>
-                <td>
-                    <button>Edit</button>
-                    <button>Do</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Wash the dishes</td>
-                <td>Date</td>
-                <td>pending</td>
-                <td>
-                    <button>Edit</button>
-                    <button>Do</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            </tbody>
+            <tbody></tbody>
+            
         </table>
-    </div>
+    <!-- </div> -->
 
     <script src="./app.js"></script>
 </body>
